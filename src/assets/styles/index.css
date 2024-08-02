@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Oceanwide";
+  src: local("Oceanwide"), url("../fonts/oceanwide-cufonfonts/Oceanwide-Semibold.otf") format("truetype");
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: 'Oceanwide', sans-serif !important;
+  scroll-behavior: smooth;
+}

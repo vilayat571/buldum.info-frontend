@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
+import addReportSlice from "../redux/reducers/addReport";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    addReportSlice: addReportSlice,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
