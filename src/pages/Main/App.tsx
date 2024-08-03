@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
+import { apiUrl } from "../../constants/API_URL";
 
 export interface IReports {
   categories: string;
@@ -17,7 +18,7 @@ const App = () => {
   const [reports, setReports] = useState<IReports[] | null>(null);
 
   useEffect(() => {
-    const url = "http://localhost:5000/api/v1/reports";
+      const url = `${apiUrl}/reports`
 
     fetch(url)
       .then((res) => res.json())

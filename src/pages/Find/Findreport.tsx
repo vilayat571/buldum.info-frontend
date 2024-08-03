@@ -1,8 +1,7 @@
-import { faArrowLeft, faBackward } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IReports } from "../Main/App";
+import { apiUrl } from "../../constants/API_URL";
 
 const Findreport = () => {
   const navigate = useNavigate();
@@ -13,7 +12,8 @@ const Findreport = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const url = "http://localhost:5000/api/v1/reports/find";
+
+    const url = `${apiUrl}/reports/find`;
 
     fetch(url, {
       method: "POST",

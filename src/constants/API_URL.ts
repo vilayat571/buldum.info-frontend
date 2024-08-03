@@ -1,0 +1,1 @@
+export const apiUrl='https://buldum-backend.onrender.com/api/v1'
