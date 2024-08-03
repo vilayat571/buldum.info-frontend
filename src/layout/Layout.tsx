@@ -7,7 +7,7 @@ export interface ILayout {
 
 const Layout: React.FC<ILayout> = ({ children }) => {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col pb-20 items-center">
       <Nav />
       {children}
     </div>

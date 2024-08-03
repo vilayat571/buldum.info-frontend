@@ -5,12 +5,19 @@
 @font-face {
   font-family: "Oceanwide";
   src: local("Oceanwide"), url("../fonts/oceanwide-cufonfonts/Oceanwide-Semibold.otf") format("truetype");
+  src: local("Poppins"), url("../fonts/Poppins/Poppins-Medium.ttf") format("truetype");
 }
 
-* {
+body {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
   font-family: 'Oceanwide', sans-serif !important;
   scroll-behavior: smooth;
+  background-color: #F4F8FB;
+}
+
+#key{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
 }
