@@ -1,5 +1,6 @@
 import React from "react";
 import Nav from "../components/Navbar/Nav";
+import Foot from "../components/Footer/Foot";
 
 export interface ILayout {
   children: React.ReactNode;
@@ -7,9 +8,10 @@ export interface ILayout {
 
 const Layout: React.FC<ILayout> = ({ children }) => {
   return (
-    <div className="flex flex-col pb-20 items-center">
+    <div className="flex flex-col  items-center">
       <Nav />
       {children}
+      <Foot />
     </div>
   );
 };
