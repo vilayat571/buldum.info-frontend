@@ -2,10 +2,7 @@ import { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
 import { apiUrl } from "../../constants/API_URL";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faExpand,
-  faFilter,
-} from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faFilter } from "@fortawesome/free-solid-svg-icons";
 
 export interface IReports {
   categories: string;
@@ -39,14 +36,17 @@ const App = () => {
   return (
     <Layout>
       <div className="mt-12  text-center">
-        <p className="xl:text-4xl lg:text-4xl md:text-3xl sm:text-2xl mb-3 font-black">
-          Ümumi {reports?.length} elan mövcuddur.
+        <p className="xl:text-4xl lg:text-5xl md:text-3xl sm:text-2xl mb-3 font-black">
+          Hal-hazırda{" "}
+          <span className=" font-semibold text-[#f00] ">{reports?.length}</span>{" "}
+          aktiv
+          <br /> elan mövcuddur.
         </p>
       </div>
-      <div className=" mt-1 mb-8 text-center xl:w-1/2 md:w-3/4 flex sm:w-4/5 lg:w-1/2">
-      <button className="px-6 py-3 h-14 bg-[#1f1e1e] text-white rounded-l">
-        <FontAwesomeIcon icon={faFilter}  />
-      </button>
+      <div className=" mb-8 text-center xl:w-1/2 md:w-3/4 flex sm:w-4/5 mt-2 lg:w-1/2">
+        <button className="px-6 py-3 h-14 bg-[#000] text-white rounded-l ">
+          <FontAwesomeIcon icon={faFilter} />
+        </button>
         <input
           required
           className="bg-white px-4 py-3 h-14 rounded placeholder:text-black font-thin w-full outline-none border-none "
@@ -75,11 +75,6 @@ const App = () => {
             </div>
           );
         })}
-      </div>
-      <div className="flex justify-center">
-        <button className="bg-red-600 px-6 py-3 text-sm mt-6 rounded-sm text-white tracking-wider">
-          Daha çox göstər
-        </button>
       </div>
     </Layout>
   );

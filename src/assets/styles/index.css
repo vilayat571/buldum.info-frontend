@@ -3,20 +3,17 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Poppins";
-  src: local("Poppins"), url("../fonts/Poppins/Poppins-Medium.ttf") format("truetype");
+  font-family: "Ocewnwide";
+  src: local("Ocewnwide"), url("../fonts/oceanwide-cufonfonts/Oceanwide-Semibold.otf") format("truetype");
 }
 
 body {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Ocewnwide', sans-serif !important;
   scroll-behavior: smooth;
   background-color: #f8f8f8;
 }
+/* App.css */
 
-#key{
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
-}

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPlayCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 const Nav = () => {
@@ -12,13 +12,19 @@ const Nav = () => {
     <div className="flex flex-col w-full items-center">
       {play && (
         <div
-        
-          className="fixed w-full h-screen right-0 top-0 bg-trasparent text-white z-10 
-  flex items-center justify-center px-4 py-2 rounded"
+        className={`content ${play ? 'open' : 'closed'} fixed w-full h-screen right-0 top-0 bg-trasparent text-white z-10 
+  flex items-center justify-center px-4 py-2 rounded`}
+   
         >
           <div className=" text-red-500 absolute top-0 left-0 w-full h-screen  bg-[#9b9b9b] opacity-50 "></div>
-          <div  className="text-black bg-white px-6 py-6 rounded w-auto items-center justify-center absolute flex flex-col z-100 ">
+          <div  className="text-black bg-white p-6 rounded w-auto items-center justify-center absolute flex flex-col z-100 ">
+<div className="w-full relative bottom-1 text-right">
 
+  <button         onClick={()=>setPlay(false)}
+  >
+    <FontAwesomeIcon className=" hover:text-red-600 text-lg" icon={faTimes} />
+  </button>
+</div>
             <iframe
               width="560"
               height="315"
@@ -49,9 +55,9 @@ const Nav = () => {
           |
           <button
             onClick={() => setPlay(true)}
-            className="text-sm rounded border-[#b8b8b8] flex items-center border-[1.5px] px-4 py-3 "
+            className="text-sm rounded border-[#b8b8b8] cursor-pointer flex items-center border-[1.5px] px-4 py-3 "
           >
-            <span> Necə çalışır</span>{" "}
+            <span className="cursor-pointer"> Necə çalışır</span>{" "}
             <FontAwesomeIcon className="text-base px-1" icon={faPlayCircle} />
           </button>
         </div>
@@ -76,7 +82,8 @@ const Nav = () => {
         <div className="xl:flex lg:flex md:hidden sm:hidden">
           <Link
             to="/elanpaylash"
-            className="bg-red-600 text-white px-6 py-3 rounded"
+            id="share"
+            className="bg-red-600 text-white px-6 py-3 tracking-wide rounded"
           >
             Elan yerləşdir
           </Link>

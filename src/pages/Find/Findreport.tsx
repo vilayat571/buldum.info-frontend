@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IReports } from "../Main/App";
 import { apiUrl } from "../../constants/API_URL";
+import logo from "../../assets/images/logo.png";
 
 const Findreport = () => {
   const navigate = useNavigate();
@@ -31,8 +32,10 @@ const Findreport = () => {
   return (
     <div
       className="w-full h-screen
-    flex items-center justify-center"
+    flex items-center justify-center  flex-col"
     >
+          <img src={logo} className=" mb-12" alt="The logo of Buldum MMC" />
+
       <div className="w-2/5  flex flex-col items-center">
         <p className="mb-6 text-3xl font-semibold">Kodu daxil edin:</p>
         <form
