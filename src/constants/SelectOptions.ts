@@ -60,5 +60,6 @@ export const categories: Category[] = [
   { label: "Çantalar və Cüzdanlar", value: "cantalar-cuzdanlar" },
   { label: "Optika (Eynəklər və s.)", value: "optika" },
   { label: "Saatlar", value: "saatlar" },
+  { label: "Paltar", value: "paltar" },
   { label: "Digər", value: "diger" },
 ];

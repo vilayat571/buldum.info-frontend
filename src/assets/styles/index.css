@@ -4,16 +4,43 @@
 
 @font-face {
   font-family: "Ocewnwide";
-  src: local("Ocewnwide"), url("../fonts/oceanwide-cufonfonts/Oceanwide-Semibold.otf") format("truetype");
+  src: local("Ocewnwide"),
+    url("../fonts/oceanwide-cufonfonts/Oceanwide-Semibold.otf")
+      format("truetype");
 }
 
 body {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: 'Ocewnwide', sans-serif !important;
+  font-family: "Ocewnwide", sans-serif !important;
   scroll-behavior: smooth;
   background-color: #f8f8f8;
 }
 /* App.css */
+
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  background: transparent;
+}
+
+.open {
+  width: 100%;
+  height: 100vh;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.7s ease, visibility 0.7s ease; /* Transition opacity and visibility */
+}
+
+.close {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease; /* Transition opacity and visibility */
+}
+
 

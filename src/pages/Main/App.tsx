@@ -3,6 +3,8 @@ import Layout from "../../layout/Layout";
 import { apiUrl } from "../../constants/API_URL";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faFilter } from "@fortawesome/free-solid-svg-icons";
+import { categories } from "../../constants/SelectOptions";
+import { useAppSelector } from "../../redux/store";
 
 export interface IReports {
   categories: string;
@@ -18,24 +20,31 @@ export interface IReports {
 
 const App = () => {
   const [reports, setReports] = useState<IReports[] | null>(null);
+  const [category, setCategory] = useState("");
+
+  const statusNav = useAppSelector((state) => state.updateNav.navCat);
+  
 
   useEffect(() => {
-    const url = `${apiUrl}/reports`;
+    const url =
+      `${apiUrl}/reports/?skip=0&limit=12` +
+      (category ? `&categories=${category}` : "") +
+      (statusNav ? `&status=${statusNav}` : "");
 
     fetch(url)
       .then((res) => res.json())
       .then((data) => setReports(data.reports));
-  }, []);
+  }, [category, statusNav]);
 
   const filteredReports: IReports[] | undefined = reports?.filter((report) => {
-    return report.isActive == true && report;
+    return report.isActive == false && report;
   });
 
-  const [query, setQuery] = useState("");
+  console.log(category, reports);
 
   return (
     <Layout>
-      <div className="mt-12  text-center">
+      <div className="mt-12 w-full  text-center">
         <p className="xl:text-4xl lg:text-5xl md:text-3xl sm:text-2xl mb-3 font-black">
           Hal-hazırda{" "}
           <span className=" font-semibold text-[#f00] ">{reports?.length}</span>{" "}
@@ -43,24 +52,29 @@ const App = () => {
           <br /> elan mövcuddur.
         </p>
       </div>
-      <div className=" mb-8 text-center xl:w-1/2 md:w-3/4 flex sm:w-4/5 mt-2 lg:w-1/2">
+      <div className=" mb-8 text-center xl:w-1/2 md:w-3/4 flex sm:w-11/12 mt-2  lg:w-1/2">
         <button className="px-6 py-3 h-14 bg-[#000] text-white rounded-l ">
           <FontAwesomeIcon icon={faFilter} />
         </button>
-        <input
+        <select
           required
           className="bg-white px-4 py-3 h-14 rounded placeholder:text-black font-thin w-full outline-none border-none "
-          id="fullName"
-          placeholder="Axtar.."
-          onChange={(e) => setQuery(e.target.value)}
-          value={query}
-        />{" "}
+          id="categories"
+          onChange={(e) => setCategory(e.target.value)}
+          value={category}
+        >
+          {categories.map((item) => {
+            return (
+              <option key={Math.random()} value={item.value}>
+                {item.label}
+              </option>
+            );
+          })}
+        </select>
       </div>
-      <div
-        className="xl:w-4/5 lg:w-full md:w-full sm:w-full xl:px-40 lg:px-40 md:px-12 sm:px-6
-       grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3  mt-5 gap-6"
-      >
-        {filteredReports?.map((report) => {
+
+      <div className="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3  mt-5 gap-6">
+        {reports?.map((report) => {
           return (
             <div className=" rounded-sm py-4 col-span-1 px-6 bg-white">
               <p className="mb-2 font-semibold text-lg"> {report.city}</p>

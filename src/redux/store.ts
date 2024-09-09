@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import addReportSlice from "../redux/reducers/addReport";
+import updateNav from "./reducers/updateNav";
 
 export const store = configureStore({
   reducer: {
     addReportSlice: addReportSlice,
+    updateNav:updateNav
   },
 });
 

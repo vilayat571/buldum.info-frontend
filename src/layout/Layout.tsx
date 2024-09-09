@@ -7,11 +7,17 @@ export interface ILayout {
 }
 
 const Layout: React.FC<ILayout> = ({ children }) => {
+  const widthOfLayout = "xl:w-7/10 md:w-3/4  sm:w-11/12 lg:w-3/4";
+
   return (
-    <div className="flex flex-col  items-center">
-      <Nav />
-      {children}
-      <Foot />
+    <div className="flex flex-col w-full items-center">
+      <div className="bg-white flex items-center justify-center w-full">
+        <Nav widthOfLayout={widthOfLayout} />
+      </div>
+      <div className={`${widthOfLayout} flex items-center flex-col`}>{children}</div>
+      <div className="bg-white flex items-center py-12 justify-center absolute bottom-0 w-full">
+        <Foot widthOfLayout={widthOfLayout} />
+      </div>
     </div>
   );
 };

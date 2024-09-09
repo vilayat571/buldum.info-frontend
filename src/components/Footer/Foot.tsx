@@ -1,10 +1,7 @@
-
-const Foot = () => {
+const Foot: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
   return (
-    <div className=' bg-white w-full mt-16 px-40 py-20'>
-      Foot
-    </div>
-  )
-}
+    <div className={`border ${widthOfLayout} h-12  w-full`}>Foot</div>
+  );
+};
 
-export default Foot
+export default Foot;

@@ -67,7 +67,7 @@ const ShareReport = () => {
 
   return (
     <Layout>
-      <div className=" w-5/6 mt-24 flex flex-col items-center">
+      <div className=" w-full px-4 mt-24 flex flex-col items-center">
         {code.length > 0 && (
           <div
             className="fixed w-full h-screen right-0 top-0 bg-trasparent text-white z-10 
@@ -114,7 +114,7 @@ const ShareReport = () => {
           </div>
         )}
         <p className="text-4xl font-semibold text-black">Yeni elan:</p>
-        <form className="mt-8 w-4/5 " onSubmit={(e) => sendReport(e)}>
+        <form className="mt-8 w-full " onSubmit={(e) => sendReport(e)}>
           <div className="grid grid-cols-2 w-full gap-4 ">
             <div className="flex flex-col items-start col-span-1">
               <span className="text-lg mb-2">Kateqoriya:</span>
