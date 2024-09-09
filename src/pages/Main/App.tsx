@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
-import { apiUrl } from "../../constants/API_URL";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { categories } from "../../constants/SelectOptions";
-import { useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { getFilteredData } from "../../redux/reducers/allReports";
 
 export interface IReports {
   categories: string;
@@ -22,23 +22,15 @@ const App = () => {
   const [reports, setReports] = useState<IReports[] | null>(null);
   const [category, setCategory] = useState("");
 
+  const dispatch=useAppDispatch()
   const statusNav = useAppSelector((state) => state.updateNav.navCat);
   
 
   useEffect(() => {
-    const url =
-      `${apiUrl}/reports/?skip=0&limit=12` +
-      (category ? `&categories=${category}` : "") +
-      (statusNav ? `&status=${statusNav}` : "");
-
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setReports(data.reports));
+   dispatch(getFilteredData({category, statusNav})).then((data)=>setReports(data.payload.reports))
   }, [category, statusNav]);
 
-  const filteredReports: IReports[] | undefined = reports?.filter((report) => {
-    return report.isActive == false && report;
-  });
+
 
   console.log(category, reports);
 
@@ -80,7 +72,7 @@ const App = () => {
               <p className="mb-2 font-semibold text-lg"> {report.city}</p>
               <p className=" line-clamp-3"> {report.description}</p>
               <button className="text-sm rounded border-[#b8b8b8] flex items-center border-[1.5px] px-4 py-3 mt-5">
-                Bax{" "}
+                Bax
                 <FontAwesomeIcon
                   className="text-sm px-1 ml-1"
                   icon={faExpand}
