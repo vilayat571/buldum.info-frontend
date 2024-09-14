@@ -41,12 +41,12 @@ const App = () => {
   const [reportData, setReportData] = useState<IReport | null>(null);
 
   const socialMediaShare = (cardData: IReport) => {
-    console.log(cardData)
+    console.log(cardData);
     if (navigator.share) {
       navigator
         .share({
-          title: "deded",
-          text: "deded",
+          title: cardData.categories,
+          text: cardData.description.slice(0, 200),
           url: "https://example.com",
         })
         .then(() => console.log("Share was successful."))
