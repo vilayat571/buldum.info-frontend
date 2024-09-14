@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExpand, faFilter } from "@fortawesome/free-solid-svg-icons";
+import {
+  faExpand,
+  faFilter,
+  faMinimize,
+  faShare,
+} from "@fortawesome/free-solid-svg-icons";
 import { categories } from "../../constants/SelectOptions";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { getFilteredData } from "../../redux/reducers/allReports";
+import styles from "../../assets/styles/Modules/FullFill.module.css";
+import { IReport } from "../Share/ShareReport";
 
 export interface IReports {
   categories: string;
@@ -22,17 +29,32 @@ const App = () => {
   const [reports, setReports] = useState<IReports[] | null>(null);
   const [category, setCategory] = useState("");
 
-  const dispatch=useAppDispatch()
+  const dispatch = useAppDispatch();
   const statusNav = useAppSelector((state) => state.updateNav.navCat);
-  
 
   useEffect(() => {
-   dispatch(getFilteredData({category, statusNav})).then((data)=>setReports(data.payload.reports))
-  }, [category, statusNav]);
+    dispatch(getFilteredData({ category, statusNav })).then((data) =>
+      setReports(data.payload.reports)
+    );
+  }, [category, dispatch, statusNav]);
 
+  const [reportData, setReportData] = useState<IReport | null>(null);
 
-
-  console.log(category, reports);
+  const socialMediaShare = (cardData: IReport) => {
+    console.log(cardData)
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "deded",
+          text: "deded",
+          url: "https://example.com",
+        })
+        .then(() => console.log("Share was successful."))
+        .catch((error) => console.log("Sharing failed:", error));
+    } else {
+      console.log("Web Share API not supported");
+    }
+  };
 
   return (
     <Layout>
@@ -44,6 +66,8 @@ const App = () => {
           <br /> elan mövcuddur.
         </p>
       </div>
+
+      {/* search an d filter bar */}
       <div className=" mb-8 text-center xl:w-1/2 md:w-3/4 flex sm:w-11/12 mt-2  lg:w-1/2">
         <button className="px-6 py-3 h-14 bg-[#000] text-white rounded-l ">
           <FontAwesomeIcon icon={faFilter} />
@@ -65,13 +89,34 @@ const App = () => {
         </select>
       </div>
 
-      <div className="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3  mt-5 gap-6">
+      {/* main cards */}
+
+      <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3  mt-5 gap-6">
         {reports?.map((report) => {
           return (
-            <div className=" rounded-sm py-4 col-span-1 px-6 bg-white">
-              <p className="mb-2 font-semibold text-lg"> {report.city}</p>
-              <p className=" line-clamp-3"> {report.description}</p>
-              <button className="text-sm rounded border-[#b8b8b8] flex items-center border-[1.5px] px-4 py-3 mt-5">
+            <div
+              key={Math.random()}
+              className=" rounded-sm py-5 col-span-1 px-6 bg-white"
+            >
+              <p className="mb-4 font-semibold text-lg flex justify-between items-center">
+                <span>{report.city}</span>
+                <button onClick={() => socialMediaShare(report)}>
+                  <FontAwesomeIcon
+                    className=" px-1 ml-1 text-xl text-red-600"
+                    icon={faShare}
+                  />
+                </button>
+              </p>
+              <p className="leading-[25px] line-clamp-3 ">
+                {" "}
+                {report.description}
+              </p>
+              <button
+                onClick={() => setReportData(report)}
+                className="text-sm rounded-[3px] border-[1px] border-[#b3b3b3]
+                flex items-center
+                px-4 py-3 mt-5"
+              >
                 Bax
                 <FontAwesomeIcon
                   className="text-sm px-1 ml-1"
@@ -81,6 +126,48 @@ const App = () => {
             </div>
           );
         })}
+      </div>
+
+      {/* open-close card */}
+      <div
+        className={`${
+          reportData != null ? styles.open : styles.close
+        } flex items-center justify-center `}
+      >
+        <div className="text-white absolute top-0 left-0 bg-black opacity-60 w-full h-screen" />
+
+        <div className="w-1/2 absolute flex items-center justify-center mx-auto text-black bg-white h-auto px-12 py-12 rounded">
+          <div className="flex flex-col items-start gap-y-[10px]">
+            <p className="text-3xl text-black font-semibold mb-2">
+              Elan sahibi əşya
+              {reportData?.status == "itirilib" ? " itirib" : " tapıb"}:
+            </p>
+            <p className="border-[1px] border-[#b3b3b3] rounded px-5 py-3  ">
+              Şəhər : {reportData?.city}
+            </p>
+
+            <div className="border-[1px] border-[#b3b3b3] flex flex-col gap-2 rounded px-5 py-3">
+              <p>Ərazi : {reportData?.area}</p>
+              <p>Elan sahibi : {reportData?.fullName}</p>
+              <p>Kateqoriya : {reportData?.categories}</p>
+              <p>Ətraflı : {reportData?.description}</p>
+              <p>Əlaqə nömrəsi : {reportData?.phone}</p>
+            </div>
+
+            <button
+              onClick={() => setReportData(null)}
+              className="flex items-center
+             bg-red-600 text-white text-sm rounded
+            px-4 py-3 mt-5"
+            >
+              Bağla
+              <FontAwesomeIcon
+                className="text-sm px-1 ml-1"
+                icon={faMinimize}
+              />
+            </button>
+          </div>
+        </div>
       </div>
     </Layout>
   );

@@ -50,7 +50,7 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
       >
         <Link to="/">
           <img
-            className="xl:w-[250px] lg:w-[220px] md:w-[250px] sm:w-[200px] object-cover"
+            className="w-[200px] object-cover"
             src={logo}
           />
         </Link>

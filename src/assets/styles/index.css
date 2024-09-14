@@ -16,6 +16,7 @@ body {
   font-family: "Ocewnwide", sans-serif !important;
   scroll-behavior: smooth;
   background-color: #f8f8f8;
+  overflow-x: hidden;
 }
 /* App.css */
 

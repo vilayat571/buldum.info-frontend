@@ -15,7 +15,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
         <Nav widthOfLayout={widthOfLayout} />
       </div>
       <div className={`${widthOfLayout} flex items-center flex-col`}>{children}</div>
-      <div className="bg-white flex items-center py-12 justify-center absolute bottom-0 w-full">
+      <div className="bg-white flex justify-center h-40 items-center mt-12 w-full">
         <Foot widthOfLayout={widthOfLayout} />
       </div>
     </div>
