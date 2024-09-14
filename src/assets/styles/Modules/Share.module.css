@@ -1,0 +1,28 @@
+.close {
+  visibility: hidden;
+  opacity: 0;
+  width: 100vw; /* Use vw for consistency */
+  height: 100vh;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: visibility 0.5s ease, opacity 0.5s ease;
+  overflow: hidden;
+  z-index: 9999; /* Ensure it's on top of other content */
+}
+
+.open {
+  width: 100vw; /* Use vw for consistency */
+  height: 100vh;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.5s ease, opacity 0.5s ease;
+  overflow: hidden;
+  z-index: 9999; /* Ensure it's on top of other content */
+}

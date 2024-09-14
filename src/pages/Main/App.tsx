@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { getFilteredData } from "../../redux/reducers/allReports";
 import styles from "../../assets/styles/Modules/FullFill.module.css";
 import { IReport } from "../Share/ShareReport";
-import { IICON, socialMediaIcons } from "../../constants/SocialMediURL";
+import ShareFallback from "../../components/Find/ShareFallback";
 
 export interface IReports {
   categories: string;
@@ -29,41 +29,56 @@ export interface IReports {
 const App = () => {
   const [reports, setReports] = useState<IReports[] | null>(null);
   const [category, setCategory] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [limit, setLimit] = useState(3);
 
   const dispatch = useAppDispatch();
   const statusNav = useAppSelector((state) => state.updateNav.navCat);
 
   useEffect(() => {
-    dispatch(getFilteredData({ category, statusNav })).then((data) =>
-      setReports(data.payload.reports)
-    );
-  }, [category, dispatch, statusNav]);
+    const loadItems = async () => {
+      setLoading(true);
+      dispatch(getFilteredData({ category, statusNav, limit })).then((data) =>
+        setReports(data.payload.reports)
+      );
+      setLoading(false);
+    };
+
+    loadItems();
+  }, [category, dispatch, statusNav, limit]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop ===
+          document.documentElement.offsetHeight &&
+        !loading
+      ) {
+        setLimit((prevLimit) => prevLimit + 1);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loading]);
 
   const [reportData, setReportData] = useState<IReport | null>(null);
-
   const [isShareSupported, setIsShareSupported] = useState<boolean>(true);
+  const [sharedReport, setSharedReport] = useState<IReport | null>(null);
 
-  const socialMediaShare = (cardData: IReport) => {
-  console.log(cardData)
-    setIsShareSupported(false);
-
-    // if (navigator.share) {
-    //   navigator.share({
-    //     title: cardData.categories,
-    //     text: cardData.description.slice(0, 200),
-    //     url: "https://buldum.netlify.app/",
-    //   });
-    // } else {
-    //   setIsShareSupported(false);
-    // }
+  const socialMediaShare = (cardData: IReport | null) => {
+    if (navigator.share) {
+      navigator.share({
+        title: cardData?.categories,
+        text: cardData?.description.slice(0, 200),
+        url: "https://buldum.netlify.app/",
+      });
+    } else {
+      setSharedReport(cardData);
+      setIsShareSupported(false);
+    }
   };
-  const close = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
-    setIsShareSupported(false);
-  };
-
-  const shareUrl = "https://buldum.netlify.app/";
-  const title = "Check out this awesome website!"; // You can customize or remove this
 
   return (
     <Layout>
@@ -100,50 +115,14 @@ const App = () => {
 
       {/* is not support card */}
 
-      <div
-        onClick={(e) => close(e)}
-        className={`${
-          !isShareSupported ? styles.open : styles.close
-        } flex items-center justify-center `}
-      >
-        <div className="text-white absolute top-0 left-0 bg-black opacity-60 w-full h-screen" />
-
-        <div className="w-auto absolute flex items-center justify-center mx-auto text-black bg-white h-auto px-3 py-3 rounded">
-          <div className="text-black flex flex-col gap-y-3  ">
-            <div className="flex flex-col gap-3">
-              {socialMediaIcons.map((icon: IICON) => {
-                const completeUrl =
-                  icon.url +
-                  encodeURIComponent(shareUrl) +
-                  (icon.text === "WhatsApp"
-                    ? "%20" + encodeURIComponent(title)
-                    : "");
-                return (
-                  <a
-                    href={completeUrl}
-                    className=" flex gap-2 items-center  border-[1px] border-[#b3b3b3] p-3 py-2 rounded"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    key={icon.text}
-                  >
-                    <img src={icon.src} alt={icon.alt} className="w-5" />{" "}
-                    <span className="text-lg">
-                      {icon.text}{" "}
-                      <FontAwesomeIcon
-                        className=" px-1 ml-1 text-xl text-red-600"
-                        icon={faShare}
-                      />
-                    </span>
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
+      <ShareFallback
+        isShareSupported={isShareSupported}
+        setIsShareSupported={setIsShareSupported}
+        reportData={reportData}
+      />
 
       {/* main cards */}
-      <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3  mt-5 gap-6">
+      <div className="grid xl:grid-cols-1 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3  mt-5 gap-6">
         {reports?.map((report) => {
           return (
             <div
@@ -159,6 +138,7 @@ const App = () => {
                   />
                 </button>
               </p>
+
               <p className="leading-[25px] line-clamp-3 ">
                 {" "}
                 {report.description}
@@ -175,6 +155,12 @@ const App = () => {
                   icon={faExpand}
                 />
               </button>
+
+              <ShareFallback
+                isShareSupported={isShareSupported}
+                setIsShareSupported={setIsShareSupported}
+                reportData={sharedReport}
+              />
             </div>
           );
         })}
@@ -194,8 +180,14 @@ const App = () => {
               Elan sahibi əşya
               {reportData?.status == "itirilib" ? " itirib" : " tapıb"}:
             </p>
-            <p className="border-[1px] border-[#b3b3b3] rounded px-5 py-3  ">
-              Şəhər : {reportData?.city}
+            <p className="border-[1px] border-[#b3b3b3] w-full items-center justify-between flex rounded px-5 py-3  ">
+              <span> Şəhər : {reportData?.city}</span>{" "}
+              <button onClick={() => socialMediaShare(reportData)}>
+                <FontAwesomeIcon
+                  className=" px-1 ml-1 text-xl text-red-600"
+                  icon={faShare}
+                />
+              </button>
             </p>
 
             <div className="border-[1px] border-[#b3b3b3] flex flex-col gap-2 rounded px-5 py-3">
