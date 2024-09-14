@@ -47,7 +47,7 @@ const App = () => {
         .share({
           title: cardData.categories,
           text: cardData.description.slice(0, 200),
-          url: "https://example.com",
+          url: "https://buldum.netlify.app/",
         })
         .then(() => console.log("Share was successful."))
         .catch((error) => console.log("Sharing failed:", error));
