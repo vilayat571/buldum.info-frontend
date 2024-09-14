@@ -44,18 +44,18 @@ const App = () => {
   const [isShareSupported, setIsShareSupported] = useState<boolean>(true);
 
   const socialMediaShare = (cardData: IReport) => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: cardData.categories,
-          text: cardData.description.slice(0, 200),
-          url: "https://buldum.netlify.app/",
-        })
-        .then(() => console.log("Share was successful."))
-        .catch((error) => console.log("Sharing failed:", error));
-    } else {
-      setIsShareSupported(false);
-    }
+  console.log(cardData)
+    setIsShareSupported(false);
+
+    // if (navigator.share) {
+    //   navigator.share({
+    //     title: cardData.categories,
+    //     text: cardData.description.slice(0, 200),
+    //     url: "https://buldum.netlify.app/",
+    //   });
+    // } else {
+    //   setIsShareSupported(false);
+    // }
   };
   const close = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
