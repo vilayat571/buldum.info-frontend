@@ -50,8 +50,9 @@ const App = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Adding a buffer of 100px to ensure we fetch data before reaching the exact bottom
       if (
-        window.innerHeight + document.documentElement.scrollTop ===
+        window.innerHeight + document.documentElement.scrollTop + 100 >=
           document.documentElement.offsetHeight &&
         !loading
       ) {
