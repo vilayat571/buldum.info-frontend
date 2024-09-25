@@ -47,14 +47,16 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
         <div className="flex gap-2 items-center">
           <Link
             to="/elantap"
-            className="text-sm rounded border-[#b8b8b8] border-[1.5px] px-4 py-3 "
+            className="text-sm rounded border-[#b8b8b8] border-[1.5px] px-4 py-3
+            hover:bg-[#DC2625] hover:border-none hover:border-white transition duration-300 hover:text-white"
           >
             Elan tap
           </Link>
           |
           <button
             onClick={() => setPlay(true)}
-            className="text-sm rounded border-[#b8b8b8] cursor-pointer flex items-center border-[1.5px] px-4 py-3 "
+            className="text-sm rounded border-[#b8b8b8] cursor-pointer flex items-center border-[1.5px] px-4 py-3 
+            hover:bg-[#DC2625] hover:border-none hover:border-white transition duration-300 hover:text-white"
           >
             <span className="cursor-pointer"> Video təlimat</span>
             <FontAwesomeIcon className="text-base px-1" icon={faPlayCircle} />
@@ -76,9 +78,9 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
               <button
                 key={category.id}
                 className={`${
-                  navCat == category.filterUrl
-                    ? "bg-[#DC2625] px-4 py-2 text-white rounded"
-                    : "hover:bg-[#F8F8F8] px-4 py-3 rounded"
+         category.filterUrl == navCat
+                    ? "bg-[#DC2625] px-4 py-2 text-white hover:text-black rounded hover:bg-[#F8F8F8] transition duration-300 "
+                    : "hover:bg-[#F8F8F8] transition duration-300 px-4 py-3 rounded "
                 }`}
                 onClick={() => {
                   dispatch(changeNav(category.filterUrl));
@@ -95,7 +97,9 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
           <Link
             to="/elanpaylash"
             id="share"
-            className="bg-red-600 text-white px-6 py-3 tracking-wide rounded"
+            className="bg-red-600 text-white 
+            hover:rounded hover:border-[#b8b8b8] border-[1.5px] border-transparent hover:bg-[#fff] hover:text-black transition duration-300
+            px-6 py-3 tracking-wide rounded"
           >
             Elan yerləşdir
           </Link>
@@ -105,9 +109,7 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
           <FontAwesomeIcon
             icon={faBars}
             onClick={() => setIsOpen(true)}
-            className="bg-red-600 text-white 
-rounded
-px-3 py-2 text-xl"
+            className="bg-red-600 text-white rounded px-3 py-2 text-xl"
           />
         </div>
 

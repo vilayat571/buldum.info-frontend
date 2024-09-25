@@ -10,7 +10,6 @@ const ShareFallback: React.FC<{
   reportData: IReport | null | undefined;
   setIsShareSupported: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ isShareSupported, reportData, setIsShareSupported }) => {
-  console.log(reportData);
   const shareUrl = "https://buldum.netlify.app/";
   const title = reportData?.description || "Bu saytı ziyarət edin"; // You can customize or remove this
 

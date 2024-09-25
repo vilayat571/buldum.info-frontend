@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { apiUrl } from "../../constants/API_URL";
 
 export interface IALLREPORTS {
-  reports: any | null;
+  reports: unknown | null;
   loading: boolean;
   error: null | string;
 }

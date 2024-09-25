@@ -30,10 +30,10 @@ const Foot: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
         <div className="flex xl:justify-end lg:justify-end md:justify-start sm:justify-start w-full  ">
           <div className="flex  items-start flex-col ">
             <div className="text-xl mb-2">Kateqoriyalar:</div>
-            {categories.map((item) => {
+            {categories.map((item, index) => {
               return (
                 <button
-                  key={Math.random()}
+                  key={index}
                   className="text-base my-[2px]"
                   value={item.value}
                 >

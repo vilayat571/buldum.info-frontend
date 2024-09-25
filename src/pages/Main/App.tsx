@@ -8,11 +8,12 @@ import {
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { categories } from "../../constants/SelectOptions";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
 import { getFilteredData } from "../../redux/reducers/allReports";
 import styles from "../../assets/styles/Modules/FullFill.module.css";
 import { IReport } from "../Share/ShareReport";
 import ShareFallback from "../../components/Find/ShareFallback";
+import { getHoleDataCounts } from "../../redux/reducers/holeReportsCount";
 
 export interface IReports {
   categories: string;
@@ -35,10 +36,14 @@ const App = () => {
 
   const dispatch = useAppDispatch();
   const statusNav = useAppSelector((state) => state.updateNav.navCat);
+  const holeCount = useAppSelector(
+    (state: RootState) => state.holeReports.count
+  );
 
   useEffect(() => {
     const loadItems = async () => {
       setLoading(true);
+      dispatch(getHoleDataCounts());
       dispatch(getFilteredData({ category, statusNav, limit })).then((data) =>
         setReports(data.payload.reports)
       );
@@ -86,15 +91,20 @@ const App = () => {
       <div className="mt-12 w-full  text-center">
         <p className="xl:text-4xl lg:text-5xl md:text-3xl sm:text-2xl mb-3 font-black">
           Hal-hazırda{" "}
-          <span className=" font-semibold text-[#f00] ">{reports?.length}</span>{" "}
+          <span className=" font-semibold text-[#f00] ">
+            {holeCount?.count}
+          </span>{" "}
           aktiv
-          <br /> elan mövcuddur.
+          <br /> elan mövcuddur
         </p>
       </div>
 
       {/* search an d filter bar */}
       <div className=" mb-8 text-center xl:w-1/2 md:w-3/4 flex sm:w-11/12 mt-2  lg:w-1/2">
-        <button className="px-6 py-3 h-14 bg-[#000] text-white rounded-l ">
+        <button
+          className="px-6 py-3 h-14 bg-[#000] text-white rounded-l 
+         hover:bg-[#DC2625] transition duration-300"
+        >
           <FontAwesomeIcon icon={faFilter} />
         </button>
         <select
@@ -104,9 +114,9 @@ const App = () => {
           onChange={(e) => setCategory(e.target.value)}
           value={category}
         >
-          {categories.map((item) => {
+          {categories.map((item, index) => {
             return (
-              <option key={Math.random()} value={item.value}>
+              <option key={index} value={item.value}>
                 {item.label}
               </option>
             );
@@ -124,10 +134,10 @@ const App = () => {
 
       {/* main cards */}
       <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 mb-20 mt-5 gap-6">
-        {reports?.map((report) => {
+        {reports?.map((report, index) => {
           return (
             <div
-              key={Math.random()}
+              key={index}
               className=" rounded-sm py-5 col-span-1 px-6 bg-white"
             >
               <p className="mb-4 font-semibold text-lg flex justify-between items-center">
@@ -146,7 +156,9 @@ const App = () => {
               </p>
               <button
                 onClick={() => setReportData(report)}
-                className="text-sm rounded-[3px] border-[1px] border-[#b3b3b3]
+                className="text-sm rounded-[3px]
+                 hover:bg-red-500 hover:text-white transition duration-300 hover:border-none
+                 border-[1px] border-[#b3b3b3]
                 flex items-center
                 px-4 py-3 mt-5"
               >
@@ -171,9 +183,9 @@ const App = () => {
       <div
         className={`${
           reportData != null ? styles.open : styles.close
-        } flex items-center justify-center `}
+        } flex items-center justify-center  `}
       >
-        <div className="text-white absolute top-0 left-0 bg-black opacity-60 w-full h-screen" />
+        <div className="text-white fixed top-0 left-0 bg-black opacity-60 w-full h-screen" />
 
         <div className="w-1/2 absolute flex items-center justify-center mx-auto text-black bg-white h-auto px-12 py-12 rounded">
           <div className="flex flex-col items-start gap-y-[10px]">
@@ -201,9 +213,9 @@ const App = () => {
 
             <button
               onClick={() => setReportData(null)}
-              className="flex items-center
-             bg-red-600 text-white text-sm rounded
-            px-4 py-3 mt-5"
+              className="flex items-center bg-black transition duration-300
+             hover:bg-red-600 text-white text-sm rounded
+            px-4 ml-0 py-3 mt-1"
             >
               Bağla
               <FontAwesomeIcon

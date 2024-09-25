@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import addReportSlice from "../redux/reducers/addReport";
 import updateNav from "./reducers/updateNav";
 import allReports from "./reducers/allReports";
+import holeReportsCount from "./reducers/holeReportsCount";
 
 export const store = configureStore({
   reducer: {
     addReportSlice: addReportSlice,
     updateNav:updateNav,
-    allReports:allReports
+    allReports:allReports,
+    holeReports:holeReportsCount
   },
 });
 

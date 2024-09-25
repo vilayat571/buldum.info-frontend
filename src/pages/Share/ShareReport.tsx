@@ -41,28 +41,29 @@ const ShareReport = () => {
   const sendReport = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(code);
-
-    const url = `${apiUrl}/reports/add`;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(report),
-    })
-      .then((response) => {
-        return response.json();
+    if (report.description.length < 400) {
+    } else {
+      const url = `${apiUrl}/reports/add`;
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(report),
       })
-      .then((data) => {
-        if (data.status === "OK") {
-          setCode(data.code);
-        }
-      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          if (data.status === "OK") {
+            setCode(data.code);
+          }
+        })
 
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   };
 
   return (
@@ -229,7 +230,12 @@ const ShareReport = () => {
           </div>
 
           <div className="mt-12 w-full items-center flex justify-center">
-            <button className="bg-green-600 text-white px-5 py-2 rounded">
+            <button
+              className="hover:bg-red-600 text-xl hover:text-white
+            transition duration-300
+            bg-white
+            px-6 py-3 rounded"
+            >
               Göndər
             </button>
           </div>
