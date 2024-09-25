@@ -18,6 +18,12 @@ body {
   background-color: #f8f8f8;
   overflow-x: hidden;
 }
+
+p {
+  letter-spacing: normal;
+  word-spacing: normal;
+}
+
 /* App.css */
 
 .popup {

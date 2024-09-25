@@ -49,17 +49,65 @@ export const cities: City[] = [
 ];
 
 export const categories: Category[] = [
-  { label: "Kateqoriya seç", value: "Kateqoriya seç" },
+  { label: "Bütün Kateqoriyalar", value: "Hamısı" },
   { label: "Elektronika", value: "Elektronika" },
   { label: "Sənədlər və Kartlar", value: "Sənədlər və Kartlar" },
   { label: "Açarlar", value: "Açarlar" },
   { label: "Geyim və Aksesuarlar", value: "Geyim və Aksesuarlar" },
   { label: "Nəqliyyat Vasitələri", value: "Nəqliyyat Vasitələri" },
-  { label: "Ev Heyvanları", value: "Ev Heyvanları" },
+  { label: "Ev heyvanı", value: "Ev heyvanı" },
   { label: "Zərgərlik", value: "Zərgərlik" },
   { label: "Çantalar və Cüzdanlar", value: "Çantalar və Cüzdanlar" },
   { label: "Optika (Eynəklər və s.)", value: "Optika (Eynəklər və s.)" },
   { label: "Saatlar", value: "Saatlar" },
   { label: "Paltar", value: "Paltar" },
   { label: "Digər", value: "Digər" },
+];
+
+export const pages = [
+  {
+    id: 1,
+    url: "Elanlar",
+    href: "/",
+  },
+  {
+    id: 2,
+    url: "Elan Tap",
+    href: "/elantap",
+  },
+  {
+    id: 3,
+    url: "Elan Paylaş",
+    href: "/elanpaylash",
+  },
+  {
+    id: 4,
+    href: "/detallar/haqqımızda",
+    url: "Biz kimik?",
+  },
+  {
+    id: 5,
+    href: "/detallar/tsv",
+    url: "Tez-tez verilən suallar",
+  },
+  {
+    id: 6,
+    href: "/detallar/reklam",
+    url: "Reklam və əməkdaşlıq",
+  },
+  {
+    id: 7,
+    href: "/detallar/nececalishir",
+    url: "Necə çalışır?",
+  },
+  {
+    id: 8,
+    href: "/detallar/qaydalar",
+    url: "İstifadə qaydaları",
+  },
+  {
+    id: 9,
+    href: "/detallar/mexfilik",
+    url: "Məxfilik siyasəti",
+  },
 ];

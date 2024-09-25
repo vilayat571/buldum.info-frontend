@@ -31,7 +31,7 @@ const App = () => {
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(32);
 
   const dispatch = useAppDispatch();
   const statusNav = useAppSelector((state) => state.updateNav.navCat);
@@ -56,7 +56,7 @@ const App = () => {
           document.documentElement.offsetHeight &&
         !loading
       ) {
-        setLimit((prevLimit) => prevLimit + 1);
+        setLimit((prevLimit) => prevLimit + 6);
       }
     };
 
@@ -123,7 +123,7 @@ const App = () => {
       />
 
       {/* main cards */}
-      <div className="grid xl:grid-cols-1 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3  mt-5 gap-6">
+      <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 mb-20 mt-5 gap-6">
         {reports?.map((report) => {
           return (
             <div

@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store.ts";
 import Findreport from "./pages/Find/Findreport.tsx";
 import ShareReport from "./pages/Share/ShareReport.tsx";
+import OtherDetail from "./pages/Others/OtherDetail.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/" element={<App />} />
           <Route path="/elantap" element={<Findreport />} />
           <Route path="/elanpaylash" element={<ShareReport />} />
+          <Route path="/detallar/:slug" element={<OtherDetail />} />
         </Routes>
       </BrowserRouter>
     </Provider>

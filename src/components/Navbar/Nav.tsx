@@ -1,20 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faPlayCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Howworks from "../Main/Howworks";
 import { changeNav } from "../../redux/reducers/updateNav";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [play, setPlay] = useState(false);
 
-  const dispatch=useAppDispatch()
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+  const navCat = useAppSelector((state) => state.updateNav.navCat);
+
+  const categories = [
+    {
+      id: 1,
+      filterUrl: "itirilib",
+      name: "İtirilmiş Əşyalar",
+    },
+    {
+      id: 2,
+      filterUrl: "tapılıb",
+      name: "Tapılmış Əşyalar",
+    },
+    {
+      id: 3,
+      filterUrl: "bütün",
+      name: "Bütün Əşyalar",
+    },
+  ];
 
   return (
     <div className={`flex flex-col sm:px-4  ${widthOfLayout} items-center`}>
@@ -38,7 +56,7 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
             onClick={() => setPlay(true)}
             className="text-sm rounded border-[#b8b8b8] cursor-pointer flex items-center border-[1.5px] px-4 py-3 "
           >
-            <span className="cursor-pointer"> Necə çalışır</span>{" "}
+            <span className="cursor-pointer"> Video təlimat</span>
             <FontAwesomeIcon className="text-base px-1" icon={faPlayCircle} />
           </button>
         </div>
@@ -49,15 +67,28 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
        xl:py-8  lg:py-8  md:py-4 sm:py-6 flex justify-between items-center "
       >
         <Link to="/">
-          <img
-            className="w-[200px] object-cover"
-            src={logo}
-          />
+          <img className="w-[200px] object-cover" src={logo} />
         </Link>
 
         <div className="gap-8 tracking-wide flex text-black xl:flex lg:flex md:hidden sm:hidden">
-          <Link onClick={()=>dispatch(changeNav('itirilib'))} to="/">İtirilmiş əşyalar</Link>
-          <Link onClick={()=>dispatch(changeNav('tapılıb'))} to="/">Tapılmış əşyalar</Link>
+          {categories.map((category) => {
+            return (
+              <button
+                key={category.id}
+                className={`${
+                  navCat == category.filterUrl
+                    ? "bg-[#DC2625] px-4 py-2 text-white rounded"
+                    : "hover:bg-[#F8F8F8] px-4 py-3 rounded"
+                }`}
+                onClick={() => {
+                  dispatch(changeNav(category.filterUrl));
+                  navigate("/");
+                }}
+              >
+                {category.name}
+              </button>
+            );
+          })}
         </div>
 
         <div className="xl:flex lg:flex md:hidden sm:hidden">

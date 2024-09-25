@@ -15,11 +15,19 @@ const initialState: IALLREPORTS = {
 
 export const getFilteredData = createAsyncThunk(
   "/fetchReports",
-  async ({ statusNav, category, limit }: { statusNav: string; category: string, limit:number }) => {
+  async ({
+    statusNav,
+    category,
+    limit,
+  }: {
+    statusNav: string;
+    category: string;
+    limit: number;
+  }) => {
     const url =
       `${apiUrl}/reports/?skip=0&limit=${limit}` +
-      (category ? `&categories=${category}` : "") +
-      (statusNav ? `&status=${statusNav}` : "");
+      (category && category !== "Hamısı" ? `&categories=${category}` : "") +
+      (statusNav && statusNav !== "bütün" ? `&status=${statusNav}` : "");
 
     const response = await fetch(url);
 
