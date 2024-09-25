@@ -4,8 +4,12 @@ import Copyrght from "../../atoms/Footer/Copyrght";
 import FormFooter from "./FormFooter";
 import PagesInFooter from "./PagesInFooter";
 import ScrollToTop from "react-scroll-to-top";
+import { useAppDispatch } from "../../redux/store";
+import { updateNav } from "../../redux/reducers/updateCategory";
 
 const Foot: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
+  const dispatch = useAppDispatch();
+
   return (
     <div className={` ${widthOfLayout} flex flex-col pt-12 pb-8  w-full`}>
       <ScrollToTop
@@ -34,6 +38,7 @@ const Foot: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
               return (
                 <button
                   key={index}
+                  onClick={() => dispatch(updateNav(item.value))}
                   className="text-base my-[2px]"
                   value={item.value}
                 >

@@ -14,6 +14,7 @@ import styles from "../../assets/styles/Modules/FullFill.module.css";
 import { IReport } from "../Share/ShareReport";
 import ShareFallback from "../../components/Find/ShareFallback";
 import { getHoleDataCounts } from "../../redux/reducers/holeReportsCount";
+import updateCategory from "../../redux/reducers/updateCategory";
 
 export interface IReports {
   categories: string;
@@ -29,10 +30,14 @@ export interface IReports {
 
 const App = () => {
   const [reports, setReports] = useState<IReports[] | null>(null);
-  const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [limit, setLimit] = useState(32);
+  const singleCategory: string = useAppSelector(
+    (state) => state.updateCategory.singleCategory
+  );
+  console.log(singleCategory);
+  const [category, setCategory] = useState("");
 
   const dispatch = useAppDispatch();
   const statusNav = useAppSelector((state) => state.updateNav.navCat);
@@ -44,14 +49,19 @@ const App = () => {
     const loadItems = async () => {
       setLoading(true);
       dispatch(getHoleDataCounts());
-      dispatch(getFilteredData({ category, statusNav, limit })).then((data) =>
-        setReports(data.payload.reports)
-      );
+      if (singleCategory.length > 0)
+        dispatch(
+          getFilteredData({
+            category: singleCategory.length>0 ? singleCategory : category,
+            statusNav,
+            limit,
+          })
+        ).then((data) => setReports(data.payload.reports));
       setLoading(false);
     };
 
     loadItems();
-  }, [category, dispatch, statusNav, limit]);
+  }, [category, dispatch, statusNav, limit, singleCategory]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -111,7 +121,7 @@ const App = () => {
           required
           className="bg-white px-4 py-3 h-14 rounded placeholder:text-black font-thin w-full outline-none border-none "
           id="categories"
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) => {setCategory(e.target.value), dispatch(updateCategory(''))}}
           value={category}
         >
           {categories.map((item, index) => {

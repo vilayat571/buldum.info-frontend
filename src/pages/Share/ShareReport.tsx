@@ -42,6 +42,7 @@ const ShareReport = () => {
     e.preventDefault();
 
     if (report.description.length < 400) {
+      alert('de')
     } else {
       const url = `${apiUrl}/reports/add`;
       fetch(url, {

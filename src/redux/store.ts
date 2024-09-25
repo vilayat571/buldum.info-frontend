@@ -4,13 +4,15 @@ import addReportSlice from "../redux/reducers/addReport";
 import updateNav from "./reducers/updateNav";
 import allReports from "./reducers/allReports";
 import holeReportsCount from "./reducers/holeReportsCount";
+import updateCategory from "./reducers/updateCategory";
 
 export const store = configureStore({
   reducer: {
     addReportSlice: addReportSlice,
     updateNav:updateNav,
     allReports:allReports,
-    holeReports:holeReportsCount
+    holeReports:holeReportsCount,
+    updateCategory:updateCategory
   },
 });
 
