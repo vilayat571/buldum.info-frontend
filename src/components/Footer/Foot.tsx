@@ -1,14 +1,14 @@
-import { categories } from "../../constants/SelectOptions";
+ import { categories } from "../../constants/SelectOptions";
 import "react-toastify/dist/ReactToastify.css";
 import Copyrght from "../../atoms/Footer/Copyrght";
 import FormFooter from "./FormFooter";
 import PagesInFooter from "./PagesInFooter";
 import ScrollToTop from "react-scroll-to-top";
-import { useAppDispatch } from "../../redux/store";
-import { updateNav } from "../../redux/reducers/updateCategory";
+// import { useAppDispatch } from "../../redux/store";
+// import { updateNav } from "../../redux/reducers/updateCategory";
 
 const Foot: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   return (
     <div className={` ${widthOfLayout} flex flex-col pt-12 pb-8  w-full`}>
@@ -31,7 +31,7 @@ const Foot: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
         <FormFooter />
         <PagesInFooter />
 
-        <div className="flex xl:justify-end lg:justify-end md:justify-start sm:justify-start w-full  ">
+  {/*       <div className="flex xl:justify-end lg:justify-end md:justify-start sm:justify-start w-full  ">
           <div className="flex  items-start flex-col ">
             <div className="text-xl mb-2">Kateqoriyalar:</div>
             {categories.map((item, index) => {
@@ -47,7 +47,7 @@ const Foot: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
               );
             })}
           </div>
-        </div>
+        </div> */}
       </div>
       <Copyrght />
     </div>

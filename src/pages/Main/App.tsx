@@ -29,15 +29,14 @@ export interface IReports {
 }
 
 const App = () => {
-  const [reports, setReports] = useState<IReports[] | null>(null);
+  const [reports, setReports] = useState<IReports[]>([]); // Initialize with an empty array
   const [loading, setLoading] = useState(false);
 
-  const [limit, setLimit] = useState(32);
+  const [limit, setLimit] = useState(3);
   const singleCategory: string = useAppSelector(
     (state) => state.updateCategory.singleCategory
   );
-  console.log(singleCategory);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("Hamısı");
 
   const dispatch = useAppDispatch();
   const statusNav = useAppSelector((state) => state.updateNav.navCat);
@@ -46,21 +45,18 @@ const App = () => {
   );
 
   useEffect(() => {
-    const loadItems = async () => {
-      setLoading(true);
-      dispatch(getHoleDataCounts());
-      if (singleCategory.length > 0)
-        dispatch(
-          getFilteredData({
-            category: singleCategory.length>0 ? singleCategory : category,
-            statusNav,
-            limit,
-          })
-        ).then((data) => setReports(data.payload.reports));
+    dispatch(getHoleDataCounts());
+    dispatch(
+      getFilteredData({
+        category,
+        statusNav,
+        limit,
+      })
+    ).then((data) => {
+      console.log("Data", data.payload);
+      setReports(data.payload.reports);
       setLoading(false);
-    };
-
-    loadItems();
+    });
   }, [category, dispatch, statusNav, limit, singleCategory]);
 
   useEffect(() => {
@@ -100,17 +96,17 @@ const App = () => {
     <Layout>
       <div className="mt-12 w-full  text-center">
         <p className="xl:text-4xl lg:text-5xl md:text-3xl sm:text-2xl mb-3 font-black">
-          Hal-hazırda{" "}
-          <span className=" font-semibold text-[#f00] ">
-            {holeCount?.count}
-          </span>{" "}
-          aktiv
-          <br /> elan mövcuddur
+          Hal-hazırda
+          <span className="font-semibold text-[#f00] mx-3">
+             {holeCount?.count}
+          </span>
+           aktiv
+           <br /> elan mövcuddur
         </p>
       </div>
 
-      {/* search an d filter bar */}
-      <div className=" mb-8 text-center xl:w-1/2 md:w-3/4 flex sm:w-11/12 mt-2  lg:w-1/2">
+      {/* search and filter bar */}
+      <div className=" mb-8 text-center xl:w-1/2 md:w-3/4 flex sm:w-11/12 mt-2 lg:w-1/2">
         <button
           className="px-6 py-3 h-14 bg-[#000] text-white rounded-l 
          hover:bg-[#DC2625] transition duration-300"
@@ -121,7 +117,10 @@ const App = () => {
           required
           className="bg-white px-4 py-3 h-14 rounded placeholder:text-black font-thin w-full outline-none border-none "
           id="categories"
-          onChange={(e) => {setCategory(e.target.value), dispatch(updateCategory(''))}}
+          onChange={(e) => {
+            setCategory(e.target.value);
+            dispatch(updateCategory(""));
+          }}
           value={category}
         >
           {categories.map((item, index) => {
@@ -135,7 +134,6 @@ const App = () => {
       </div>
 
       {/* is not support card */}
-
       <ShareFallback
         isShareSupported={isShareSupported}
         setIsShareSupported={setIsShareSupported}
