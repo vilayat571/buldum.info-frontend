@@ -6,7 +6,7 @@ const Report: React.FC<{ report: IReports | null }> = ({ report }) => {
   const navigate = useNavigate();
 
   return (
-    <div className=" flex items-center justify-center">
+    <div className=" w-full flex items-center justify-center">
       <div className=" rounded xl:w-1/2 lg:w-3/5 sm:w-11/12 md:4/5 bg-white p-6">
         <p className="text-left w-1/2 mb-8 text-xl  font-semibold">
         <span className="bg-[#EF4444] text-white px-4 py-3  rounded">

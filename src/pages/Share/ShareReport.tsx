@@ -3,6 +3,8 @@ import Layout from "../../layout/Layout";
 import { categories, cities } from "../../constants/SelectOptions";
 import { Link } from "react-router-dom";
 import { apiUrl } from "../../constants/API_URL";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export interface IReport {
   categories: string;
@@ -38,11 +40,25 @@ const ShareReport = () => {
 
   const [code, setCode] = useState("");
 
-  const sendReport = (e: React.FormEvent<HTMLFormElement>) => {
+  const sendReport = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     if (report.description.length < 400) {
-      alert('de')
+      toast("Elan haqqında məlumatı ətraflı yazın..", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        style: {
+          backgroundColor: "red",
+          color: "white",
+          fontFamily: "Poppins",
+          zIndex: "999",
+        },
+      });
     } else {
       const url = `${apiUrl}/reports/add`;
       fetch(url, {
@@ -115,8 +131,10 @@ const ShareReport = () => {
             </div>
           </div>
         )}
+        <ToastContainer />
+
         <p className="text-4xl font-semibold text-black">Yeni elan:</p>
-        <form className="mt-8 w-full " onSubmit={(e) => sendReport(e)}>
+        <form className="mt-8 w-full ">
           <div className="grid grid-cols-2 w-full gap-4 ">
             <div className="flex flex-col items-start col-span-1">
               <span className="text-lg mb-2">Kateqoriya:</span>
@@ -136,7 +154,6 @@ const ShareReport = () => {
                 })}
               </select>
             </div>
-
             <div className="flex flex-col items-start col-span-1">
               <span className="text-lg mb-2">Şəhər:</span>
               <select
@@ -232,6 +249,7 @@ const ShareReport = () => {
 
           <div className="mt-12 w-full items-center flex justify-center">
             <button
+              onClick={(e) => sendReport(e)}
               className="hover:bg-red-600 text-xl hover:text-white
             transition duration-300
             bg-white

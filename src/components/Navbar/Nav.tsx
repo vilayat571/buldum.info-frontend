@@ -99,9 +99,9 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
             id="share"
             className="bg-red-600 text-white 
             hover:rounded hover:border-[#b8b8b8] border-[1.5px] border-transparent hover:bg-[#fff] hover:text-black transition duration-300
-            px-6 py-3 tracking-wide rounded"
+            px-5 py-3 tracking-wide rounded"
           >
-            Elan yerləşdir
+            Elan yerləşdir +
           </Link>
         </div>
 

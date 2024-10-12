@@ -141,12 +141,12 @@ const App = () => {
       />
 
       {/* main cards */}
-      <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 mb-20 mt-5 gap-6">
+      <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 w-full lg:grid-cols-3 mb-20 mt-5 gap-6">
         {reports?.map((report, index) => {
           return (
             <div
               key={index}
-              className=" rounded-sm py-5 col-span-1 px-6 bg-white"
+              className=" w-full rounded-sm py-5 col-span-1 px-6 bg-[#fff]"
             >
               <p className="mb-4 font-semibold text-lg flex justify-between items-center">
                 <span>{report.city}</span>
@@ -196,7 +196,7 @@ const App = () => {
         <div className="text-white fixed top-0 left-0 bg-black opacity-60 w-full h-screen" />
 
         <div className="w-1/2 absolute flex items-center justify-center mx-auto text-black bg-white h-auto px-12 py-12 rounded">
-          <div className="flex flex-col items-start gap-y-[10px]">
+          <div className="flex w-full flex-col items-start gap-y-[10px]">
             <p className="text-3xl text-black font-semibold mb-2">
               Elan sahibi əşya
               {reportData?.status == "itirilib" ? " itirib" : " tapıb"}:
@@ -211,7 +211,7 @@ const App = () => {
               </button>
             </p>
 
-            <div className="border-[1px] border-[#b3b3b3] flex flex-col gap-2 rounded px-5 py-3">
+            <div className="border-[1px] w-full border-[#b3b3b3] flex flex-col gap-2 rounded px-5 py-3">
               <p>Ərazi : {reportData?.area}</p>
               <p>Elan sahibi : {reportData?.fullName}</p>
               <p>Kateqoriya : {reportData?.categories}</p>
