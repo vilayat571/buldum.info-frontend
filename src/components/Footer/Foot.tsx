@@ -1,4 +1,3 @@
- import { categories } from "../../constants/SelectOptions";
 import "react-toastify/dist/ReactToastify.css";
 import Copyrght from "../../atoms/Footer/Copyrght";
 import FormFooter from "./FormFooter";

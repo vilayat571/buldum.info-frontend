@@ -14,7 +14,6 @@ import styles from "../../assets/styles/Modules/FullFill.module.css";
 import { IReport } from "../Share/ShareReport";
 import ShareFallback from "../../components/Find/ShareFallback";
 import { getHoleDataCounts } from "../../redux/reducers/holeReportsCount";
-import updateCategory from "../../redux/reducers/updateCategory";
 
 export interface IReports {
   categories: string;
@@ -29,7 +28,7 @@ export interface IReports {
 }
 
 const App = () => {
-  const [reports, setReports] = useState<IReports[]>([]); // Initialize with an empty array
+  const [reports, setReports] = useState<IReports[]>([]);
   const [loading, setLoading] = useState(false);
 
   const [limit, setLimit] = useState(3);
@@ -61,7 +60,6 @@ const App = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Adding a buffer of 100px to ensure we fetch data before reaching the exact bottom
       if (
         window.innerHeight + document.documentElement.scrollTop + 100 >=
           document.documentElement.offsetHeight &&
@@ -94,14 +92,14 @@ const App = () => {
 
   return (
     <Layout>
-      <div className="mt-12 w-full  text-center">
+      <div className="mt-12 w-full text-center">
         <p className="xl:text-4xl lg:text-5xl md:text-3xl sm:text-2xl mb-3 font-black">
           Hal-hazırda
           <span className="font-semibold text-[#f00] mx-3">
-             {holeCount?.count}
+            {holeCount}
           </span>
-           aktiv
-           <br /> elan mövcuddur
+          aktiv
+          <br /> elan mövcuddur
         </p>
       </div>
 
@@ -119,7 +117,6 @@ const App = () => {
           id="categories"
           onChange={(e) => {
             setCategory(e.target.value);
-            dispatch(updateCategory(""));
           }}
           value={category}
         >
@@ -159,7 +156,6 @@ const App = () => {
               </p>
 
               <p className="leading-[25px] line-clamp-3 ">
-                {" "}
                 {report.description}
               </p>
               <button
@@ -199,9 +195,9 @@ const App = () => {
           <div className="flex w-full flex-col items-start gap-y-[10px]">
             <p className="text-3xl text-black font-semibold mb-2">
               Elan sahibi əşya
-              {reportData?.status == "itirilib" ? " itirib" : " tapıb"}:
+              {reportData?.status === "itirilib" ? " itirib" : " tapıb"}:
             </p>
-            <p className="border-[1px] border-[#b3b3b3] w-full items-center justify-between flex rounded px-5 py-3  ">
+            <p className="border-[1px] border-[#b3b3b3] w-full items-center justify-between flex rounded px-5 py-3">
               <span> Şəhər : {reportData?.city}</span>{" "}
               <button onClick={() => socialMediaShare(reportData)}>
                 <FontAwesomeIcon
