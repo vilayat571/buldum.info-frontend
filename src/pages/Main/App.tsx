@@ -95,7 +95,7 @@ const App = () => {
         <p className="xl:text-4xl lg:text-5xl md:text-3xl sm:text-2xl mb-3 font-black">
           Hal-hazırda
           <span className="font-semibold text-[#f00] mx-3">
-            {holeCount}
+           reqem
           </span>
           aktiv
           <br /> elan mövcuddur
