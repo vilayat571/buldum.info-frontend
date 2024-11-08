@@ -80,7 +80,7 @@ const App = () => {
       setIsShareSupported(false);
     }
   };
-  const scrollRef = useRef(null); // Create a ref for the target div
+  const scrollRef = useRef<HTMLDivElement>(null);
 
 
   return (
