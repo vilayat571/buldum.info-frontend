@@ -22,8 +22,8 @@ const Howworks: React.FC<{
           </button>
         </div>
         <iframe
-          width="560"
-          height="315"
+          className="xl:w-[560px] lg:w-[560px] md:w-[460px] sm:w-auto 
+         xl:h-[375px] lg:h-[375px] md:h-[305px] sm:h-auto"
           src="https://www.youtube.com/embed/ix9cRaBkVe0?si=1kWDgRG7FV_WOeiI"
           title="YouTube video player"
           frameBorder="0"

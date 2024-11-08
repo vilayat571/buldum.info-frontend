@@ -3,7 +3,7 @@
 .close {
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0.5s ease, opacity 0.5s ease;
+    transition: visibility 0.1s ease, opacity 0.1s ease;
     z-index: 9999; /* Ensure it's on top of other content */
   }
   

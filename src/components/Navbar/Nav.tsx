@@ -1,11 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Howworks from "../Main/Howworks";
 import { changeNav } from "../../redux/reducers/updateNav";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
+import Sidebar from "./Sidebar";
+import Logo from "./Logo";
+
+export interface ICategory {
+  id: number;
+  filterUrl: string;
+  name: string;
+}
 
 const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +23,7 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
   const dispatch = useAppDispatch();
   const navCat = useAppSelector((state) => state.updateNav.navCat);
 
-  const categories = [
+  const categories:ICategory[] = [
     {
       id: 1,
       filterUrl: "itirilib",
@@ -35,7 +42,7 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
   ];
 
   return (
-    <div className={`flex flex-col sm:px-4  ${widthOfLayout} items-center`}>
+    <div className={`flex flex-col  ${widthOfLayout} items-center`}>
       <Howworks play={play} setPlay={setPlay} />
       <div
         className="  pt-4 py-4 text-sm w-full
@@ -48,7 +55,7 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
           <Link
             to="/elantap"
             className="text-sm rounded border-[#b8b8b8] border-[1.5px] px-4 py-3
-            hover:bg-[#DC2625] hover:border-none hover:border-white transition duration-300 hover:text-white"
+            hover:bg-[#DC2625]  hover:border-[#DC2625] transition duration-300 hover:text-white"
           >
             Elan tap
           </Link>
@@ -56,7 +63,7 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
           <button
             onClick={() => setPlay(true)}
             className="text-sm rounded border-[#b8b8b8] cursor-pointer flex items-center border-[1.5px] px-4 py-3 
-            hover:bg-[#DC2625] hover:border-none hover:border-white transition duration-300 hover:text-white"
+            hover:bg-[#DC2625] hover:border-[#DC2625] transition duration-300 hover:text-white"
           >
             <span className="cursor-pointer"> Video təlimat</span>
             <FontAwesomeIcon className="text-base px-1" icon={faPlayCircle} />
@@ -68,9 +75,7 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
         sm:bg-white xl:bg-transparent lg:bg-transparent md:bg-white
        xl:py-8  lg:py-8  md:py-4 sm:py-6 flex justify-between items-center "
       >
-        <Link to="/">
-          <img className="w-[200px] object-cover" src={logo} />
-        </Link>
+        <Logo />
 
         <div className="gap-8 tracking-wide flex text-black xl:flex lg:flex md:hidden sm:hidden">
           {categories.map((category) => {
@@ -78,9 +83,9 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
               <button
                 key={category.id}
                 className={`${
-         category.filterUrl == navCat
-                    ? "bg-[#DC2625] px-4 py-2 text-white hover:text-black rounded hover:bg-[#F8F8F8] transition duration-300 "
-                    : "hover:bg-[#F8F8F8] transition duration-300 px-4 py-3 rounded "
+                  category.filterUrl == navCat
+                    ? "bg-[#DC2625] px-4 py-2 text-white rounded  transition duration-300 "
+                    : "hover:bg-[#DC2625] hover:text-white transition duration-300 px-4 py-3 rounded "
                 }`}
                 onClick={() => {
                   dispatch(changeNav(category.filterUrl));
@@ -113,9 +118,9 @@ const Nav: React.FC<{ widthOfLayout: string }> = ({ widthOfLayout }) => {
           />
         </div>
 
-        {isOpen && (
-          <div className="fixed top-0 left-0 h-screen w-full bg-[#F4F4F4]"></div>
-        )}
+        {isOpen && <Sidebar
+        setIsOpen={setIsOpen}
+        setPlay={setPlay} isOpen={isOpen}  />}
       </div>
     </div>
   );

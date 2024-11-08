@@ -8,7 +8,7 @@ export interface ILayout {
 }
 
 const Layout: React.FC<ILayout> = ({ children }) => {
-  const widthOfLayout = "xl:w-7/10 md:w-3/4 px-4 sm:w-11/12 lg:w-3/4";
+  const widthOfLayout = "xl:w-7/10 md:w-3/4 px-4 sm:w-[99%] lg:w-3/4";
 
   return (
     <motion.div

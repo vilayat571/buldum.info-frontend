@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
 import { categories, cities } from "../../constants/SelectOptions";
 import { Link } from "react-router-dom";
@@ -38,7 +38,16 @@ const ShareReport = () => {
     setReport({ ...report, [e.target.id]: e.target.value });
   };
 
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState("22121");
+
+  const closePopup = () => {
+    const survey = confirm(
+      "Bağlamdan öncə!\nKodunuzu götürdüyünüzdən tam əmin olun."
+    );
+    if (survey) {
+      setCode("");
+    }
+  };
 
   const sendReport = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -83,54 +92,68 @@ const ShareReport = () => {
     }
   };
 
+  useEffect(() => {
+    if (code.length > 0) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [code]);
+
   return (
     <Layout>
       <div className=" w-full px-4 mt-24 flex flex-col items-center">
-        {code.length > 0 && (
-          <div
-            className="fixed w-full h-screen right-0 top-0 bg-trasparent text-white z-10 
-      flex items-center justify-center px-4 py-2 rounded"
-          >
-            <div className=" text-red-500 absolute top-0 left-0 w-full h-screen  bg-[#9b9b9b] opacity-50 "></div>
-            <div className="text-black bg-white px-12 py-12 rounded w-1/2 absolute flex flex-col z-100 ">
-              <p className="text-base">
-                Təbriklər elan uğurla bazamıza əlavə edildi! 🎉
-                <br />
-                <br />
-                Növbəti mərhələdə elan əməkdaşlarımız tərəfindən dəyərləndilicək
-                əgər uyğun hesab edilərsə saytda elanlar bölməsinə əlavə
-                ediləcək!
-                <br />
-                <br />
-                Elanınızın paylaşılıb,paylaşılmadığı və ya gözləmədə olub
-                olmadığı haqda məlumatı aşağıdakı kodu{" "}
-                <Link to="/" className="underline text-red-500 px-1">
-                  Elan tap
-                </Link>{" "}
-                səhifəsində qeyd edərək görə bilərsiniz!
-                <br />
-                <br />
-                Elanınızın kodu:{" "}
-                <span className="bg-green-500 text-white px-2 rounded py-1">
-                  {code}
-                </span>
-                <br />
-                <br />
-                <p className="text-red-600">
-                  Qeyd: kodunuzu itirməməyinizi tpvsiyyə edirik. Əks halda
-                  elanın cai vəziyyəti haqqında məlumatı ala bilməyəcəksiniz.
-                </p>
-                <br />
-                <button
-                  onClick={() => setCode("")}
-                  className=" bg-red-600 text-white px-5 py-2 rounded-sm"
-                >
-                  Bağa
-                </button>
-              </p>
-            </div>
-          </div>
-        )}
+      {code.length > 0 && (
+  <div className="fixed inset-0 bg-transparent z-10 top-0 left-0 flex items-center justify-center">
+    {/* Background overlay */}
+    <div className="absolute inset-0 bg-[#ff0000] top-0 left-0 flex items-center justify-center opacity-50"></div>
+
+    {/* Centered modal */}
+    <div
+      id="div1"
+      className="z-20 border text-black bg-white px-12 py-12 rounded w-1/2 flex flex-col"
+    >
+      <p className="text-base">
+        Təbriklər elanınız uğurla bazamıza əlavə edildi! 🎉
+        <br />
+        <br />
+        Növbəti mərhələdə elan əməkdaşlarımız tərəfindən
+        dəyərləndəriləcək əgər uyğun hesab edilərsə saytda elanlar
+        bölməsinə əlavə ediləcəkdir!
+        <br />
+        <br />
+        Elanınızın paylaşılıb, paylaşılmadığı və ya gözləmədə olub
+        olmadığı haqında məlumatı aşağıdakı kodu{" "}
+        <Link to="/" className="underline text-red-500 px-1">
+          Elan tap
+        </Link>{" "}
+        səhifəsində qeyd edərək öyrənə bilərsiniz!
+        <br />
+        <br />
+        Elanınızın kodu:{" "}
+        <span className="bg-green-500 text-white px-2 rounded py-1">
+          {code}
+        </span>
+        <br />
+        <br />
+        <p className="text-red-600">
+          Qeyd: kodunuzu itirməməyinizi tövsiyyə edirik. Əks halda
+          elanın cari vəziyyəti haqqında məlumat əldə edə
+          bilməyəcəksiniz.
+        </p>
+        <br />
+        <button
+          onClick={() => closePopup()}
+          className="bg-red-600 text-white px-5 py-2 rounded-sm"
+        >
+          Bağla
+        </button>
+      </p>
+    </div>
+  </div>
+)}
+
+
         <ToastContainer />
 
         <p className="text-4xl font-semibold text-black">Yeni elan:</p>

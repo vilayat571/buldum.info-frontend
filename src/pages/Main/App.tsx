@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Layout from "../../layout/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,7 +8,7 @@ import {
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { categories } from "../../constants/SelectOptions";
-import {  useAppDispatch, useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { getFilteredData } from "../../redux/reducers/allReports";
 import styles from "../../assets/styles/Modules/FullFill.module.css";
 import { IReport } from "../Share/ShareReport";
@@ -29,9 +29,8 @@ export interface IReports {
 
 const App = () => {
   const [reports, setReports] = useState<IReports[]>([]);
-  const [loading, setLoading] = useState(false);
 
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(9);
   const singleCategory: string = useAppSelector(
     (state) => state.updateCategory.singleCategory
   );
@@ -40,6 +39,17 @@ const App = () => {
   const dispatch = useAppDispatch();
   const statusNav = useAppSelector((state) => state.updateNav.navCat);
 
+  const holeReportsCount = useAppSelector((state) => state.holeReports.count);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "visible";
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     dispatch(getHoleDataCounts());
@@ -51,24 +61,8 @@ const App = () => {
       })
     ).then((data) => {
       setReports(data.payload.reports);
-      setLoading(false);
     });
   }, [category, dispatch, statusNav, limit, singleCategory]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop + 100 >=
-          document.documentElement.offsetHeight &&
-        !loading
-      ) {
-        setLimit((prevLimit) => prevLimit + 6);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading]);
 
   const [reportData, setReportData] = useState<IReport | null>(null);
   const [isShareSupported, setIsShareSupported] = useState<boolean>(true);
@@ -86,6 +80,8 @@ const App = () => {
       setIsShareSupported(false);
     }
   };
+  const scrollRef = useRef(null); // Create a ref for the target div
+
 
   return (
     <Layout>
@@ -93,7 +89,7 @@ const App = () => {
         <p className="xl:text-4xl lg:text-5xl md:text-3xl sm:text-2xl mb-3 font-black">
           Hal-hazırda
           <span className="font-semibold text-[#f00] mx-3">
-           reqem
+            {holeReportsCount}
           </span>
           aktiv
           <br /> elan mövcuddur
@@ -135,40 +131,47 @@ const App = () => {
       />
 
       {/* main cards */}
-      <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 w-full lg:grid-cols-3 mb-20 mt-5 gap-6">
+      <div
+        ref={scrollRef} // Assign ref to the div you want to scroll to
+        className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 w-full lg:grid-cols-3 mb-8 mt-5 gap-3"
+      >
         {reports?.map((report, index) => {
           return (
             <div
               key={index}
-              className=" w-full rounded-sm py-5 col-span-1 px-6 bg-[#fff]"
+              className="w-full rounded-sm py-5 col-span-1 px-6 bg-[#fff]"
             >
-              <p className="mb-4 font-semibold text-lg flex justify-between items-center">
+              <p className="mb-4 font-semibold text-xl flex justify-between items-center">
                 <span>{report.city}</span>
                 <button onClick={() => socialMediaShare(report)}>
                   <FontAwesomeIcon
-                    className=" px-1 ml-1 text-xl text-red-600"
+                    className="px-1 ml-1 text-xl text-red-600"
                     icon={faShare}
                   />
                 </button>
               </p>
 
-              <p className="leading-[25px] line-clamp-3 ">
+              <p className="w-full text-lg line-clamp-3">
                 {report.description}
               </p>
-              <button
-                onClick={() => setReportData(report)}
-                className="text-sm rounded-[3px]
-                 hover:bg-red-500 hover:text-white transition duration-300 hover:border-none
-                 border-[1px] border-[#b3b3b3]
-                flex items-center
-                px-4 py-3 mt-5"
-              >
-                Bax
-                <FontAwesomeIcon
-                  className="text-sm px-1 ml-1"
-                  icon={faExpand}
-                />
-              </button>
+
+              <div className="flex flex-row gap-3 mt-4">
+                <button className="bg-red-600 px-3 text-white rounded-sm py-2">
+                  {report.status == "itirilib"
+                    ? "Əşya itirilib"
+                    : "Əşya tapılıb"}
+                </button>
+                <button
+                  onClick={() => {
+                    setReportData(report);
+                    setIsOpen(!isOpen);
+                  }}
+                  className="text-base rounded-sm hover:bg-red-500 hover:text-white transition duration-300 hover:border-none border-[1px] border-[#b3b3b3] flex items-center px-3 py-2"
+                >
+                  Bax
+                  <FontAwesomeIcon className="text-sm px-1 ml-1" icon={faExpand} />
+                </button>
+              </div>
 
               <ShareFallback
                 isShareSupported={isShareSupported}
@@ -180,6 +183,19 @@ const App = () => {
         })}
       </div>
 
+      <div className="w-full flex item-center justify-center mb-6">
+        <button
+          onClick={() => {
+            setLimit(limit + 6);
+            scrollRef?.current?.scrollIntoView({ behavior: "smooth" }); // Scrolls to the top of the reports section smoothly
+          }}
+          className="bg-red-600 px-5 py-4 rounded text-white"
+        >
+          Daha çox göstər(+6)
+        </button>
+      </div>
+  
+
       {/* open-close card */}
       <div
         className={`${
@@ -188,7 +204,10 @@ const App = () => {
       >
         <div className="text-white fixed top-0 left-0 bg-black opacity-60 w-full h-screen" />
 
-        <div className="w-1/2 absolute flex items-center justify-center mx-auto text-black bg-white h-auto px-12 py-12 rounded">
+        <div
+          className="xl:w-1/2 lg:w-1/2 md:w-5/6 sm:w-[95%]
+         absolute flex items-center justify-center mx-auto text-black bg-white h-auto px-12 py-12 rounded"
+        >
           <div className="flex w-full flex-col items-start gap-y-[10px]">
             <p className="text-3xl text-black font-semibold mb-2">
               Elan sahibi əşya

@@ -13,7 +13,7 @@ const initialState: ICountDataInterface = {
 };
 
 export const getHoleDataCounts = createAsyncThunk("/getData", async () => {
-  const url = "https://buldum.info/api/v1/reports";
+  const url = "http://localhost:5001/api/v1/reports";
   return fetch(url).then((res) => res.json());
 });
 
@@ -25,7 +25,7 @@ const holeReports = createSlice({
     builder.addCase(getHoleDataCounts.fulfilled, (state, action) => {
       state.error = null;
       state.loading = true;
-      state.count = action.payload;
+      state.count = action.payload.count;
     });
   },
 });
