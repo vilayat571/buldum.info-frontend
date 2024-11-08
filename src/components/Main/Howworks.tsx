@@ -1,6 +1,8 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import styles from "../../assets/styles/Modules/FullFill.module.css";
+
 
 const Howworks: React.FC<{
   play: boolean;
@@ -8,7 +10,7 @@ const Howworks: React.FC<{
 }> = ({ play, setPlay }) => {
   return (
     <div
-      className={` popup ${play ? "open " : "close"}  
+      className={` popup ${play ? styles.open : styles.close}  
    `}
     >
       <div className=" text-red-500 absolute top-0 left-0 w-full h-screen  bg-[#9b9b9b] opacity-50 "></div>

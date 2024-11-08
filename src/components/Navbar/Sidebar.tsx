@@ -48,8 +48,9 @@ const Sidebar = ({
 
   return (
     <div
-    onClick={() => setIsOpen(!isOpen)}
-    className="fixed top-0 left-0 h-[100vh] w-full bg-[#fff] px-4 py-6 pb-8 z-10 overflow-hidden">
+      onClick={() => setIsOpen(!isOpen)}
+      className="fixed top-0 left-0 h-[100vh] w-full bg-[#fff] px-4 py-6 pb-8 z-10 overflow-hidden"
+    >
       <div className="flex flex-col">
         <div className="px-1 flex items-center justify-between">
           <Logo />
@@ -60,8 +61,7 @@ const Sidebar = ({
           />
         </div>
 
-        <div 
-        className="flex mt-5 flex-col p-1 items-start gap-3">
+        <div className="flex mt-5 flex-col p-1 items-start gap-3">
           {categories.map((category: ICategory) => {
             return (
               <button
@@ -93,6 +93,15 @@ const Sidebar = ({
             <span className="cursor-pointer"> Video təlimat</span>
             <FontAwesomeIcon className="text-base px-1" icon={faPlayCircle} />
           </button>
+          <Link
+            to="/elanpaylash"
+            id="share"
+            className="bg-red-600 text-white 
+            hover:rounded hover:border-[#b8b8b8] border-[1.5px] border-transparent hover:bg-[#fff] hover:text-black transition duration-300
+            px-5 py-3 tracking-wide rounded"
+          >
+            Elan yerləşdir +
+          </Link>
         </div>
 
         {/*  */}
