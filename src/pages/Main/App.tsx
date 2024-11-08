@@ -8,7 +8,7 @@ import {
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { categories } from "../../constants/SelectOptions";
-import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
+import {  useAppDispatch, useAppSelector } from "../../redux/store";
 import { getFilteredData } from "../../redux/reducers/allReports";
 import styles from "../../assets/styles/Modules/FullFill.module.css";
 import { IReport } from "../Share/ShareReport";
@@ -39,9 +39,7 @@ const App = () => {
 
   const dispatch = useAppDispatch();
   const statusNav = useAppSelector((state) => state.updateNav.navCat);
-  const holeCount = useAppSelector(
-    (state: RootState) => state.holeReports.count
-  );
+
 
   useEffect(() => {
     dispatch(getHoleDataCounts());
