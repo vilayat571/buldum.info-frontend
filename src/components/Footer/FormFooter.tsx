@@ -13,7 +13,7 @@ const FormFooter = () => {
   ) => {
     e.preventDefault();
 
-    const url = "http://localhost:5001/api/v1/offers/add";
+    const url = "https://buldum.info/api/v1/offers/add";
     fetch(url, {
       method: "POST",
       headers: {

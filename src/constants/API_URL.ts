@@ -1,1 +1,1 @@
-export const apiUrl = "http://localhost:5001/api/v1";
+export const apiUrl = "https://buldum.info/api/v1";
