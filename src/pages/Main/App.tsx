@@ -52,7 +52,6 @@ const App = () => {
         limit,
       })
     ).then((data) => {
-      console.log("Data", data.payload);
       setReports(data.payload.reports);
       setLoading(false);
     });
